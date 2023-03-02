@@ -1,0 +1,48 @@
+USE [ZKrug]
+
+CREATE SCHEMA [Lab03]
+
+CREATE USER Blake FOR LOGIN BJohnson
+CREATE USER Nik FOR LOGIN NBailey
+
+GRANT
+    SELECT, INSERT, ALTER, DELETE, EXECUTE, UPDATE
+ON SCHEMA :: Lab03
+    TO Blake, Nik
+GO
+
+CREATE TABLE Lab03.master(
+    start DATETIME NOT NULL,
+    stop DATETIME NOT NULL,
+    tid INTEGER PRIMARY KEY IDENTITY(1,1) NOT NULL,
+    register INTEGER NOT NULL,
+    [user] NVARCHAR(255) NOT NULL,
+    total DECIMAL(10,2) NOT NULL,
+)
+
+CREATE TABLE Lab03.t_items(
+    tid INTEGER NOT NULL FOREIGN KEY REFERENCES Lab03.master(tid),
+    pid INTEGER NOT NULL FOREIGN KEY REFERENCES Lab03.inventory(pid),
+    -- check what type pid is
+    price DECIMAL(10,2) NOT NULL,
+    gid INTEGER NOT NULL,
+    amount DECIMAL(10,2) NOT NULL,
+)
+
+CREATE TABLE Lab03.combos(
+    uid INTEGER PRIMARY KEY NOT NULL,
+    comboName NVARCHAR (255) NOT NULL,
+    item INTEGER NOT NULL FOREIGN KEY REFERENCES Lab03.inventory(pid),
+    -- check what type pid is
+    price DECIMAL(10,2) NOT NULL,
+    comboCode INTEGER NOT NULL,
+)
+
+CREATE TABLE Lab03.poorDesign(
+    tid INTEGER NOT NULL FOREIGN KEY REFERENCES Lab03.master(tid),
+    pid INTEGER NOT NULL FOREIGN KEY REFERENCES Lab03.inventory(pid),
+    price DECIMAL(10,2) NOT NULL,
+    gid INTEGER NOT NULL,
+    amount DECIMAL(10,2) NOT NULL,
+)
+
