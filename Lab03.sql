@@ -136,16 +136,16 @@ SELECT * FROM Lab03.movieRentals
 
 
     -- Third Normal
+CREATE TABLE Lab03.salutations(
+    salutation_id INT PRIMARY KEY NOT NULL,
+    salutation NVARCHAR(5) NOT NULL
+)    
+
 CREATE TABLE Lab03.thirdNormal(
     member_id INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
     name NVARCHAR(255) NOT NULL,
     address NVARCHAR(255) NOT NULL,
     salutation INT NOT NULL FOREIGN KEY REFERECES Lab03.salutations(salutation_id)
-)
-
-CREATE TABLE Lab03.salutations(
-    salutation_id INT PRIMARY KEY NOT NULL,
-    salutation NVARCHAR(5) NOT NULL
 )
 
 INSERT INTO Lab03.movieRentals VALUES (1, 'Harry Potter and the Chamber of Secrets')
