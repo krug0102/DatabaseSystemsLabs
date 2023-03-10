@@ -131,6 +131,9 @@ INSERT INTO Lab03.secondNormal VALUES ('Zeke Krug', 'blakely hall', 'Mr.')
 INSERT INTO Lab03.secondNormal VALUES ('Nik Bailey', 'an apartment in Morris', 'Mr.')
 INSERT INTO Lab03.secondNormal VALUES ('Blake Johnson', 'a house in Morris', 'Mr.')
 
+SELECT * FROM Lab03.secondNormal
+SELECT * FROM Lab03.movieRentals
+
 
     -- Third Normal
 CREATE TABLE Lab03.thirdNormal(
@@ -159,6 +162,11 @@ INSERT INTO Lab03.movieRentals VALUES (3, 'John Wick 4')
 INSERT INTO Lab03.salutations VALUES (1, 'Mr.')
 INSERT INTO Lab03.salutations VALUES (2, 'Dr.')
 
-INSERT INTO Lab03.secondNormal VALUES ('Zeke Krug', 'blakely hall', 1)
-INSERT INTO Lab03.secondNormal VALUES ('Nik Bailey', 'an apartment in Morris', 2)
-INSERT INTO Lab03.secondNormal VALUES ('Blake Johnson', 'a house in Morris', 1)
+INSERT INTO Lab03.thirdNormal VALUES ('Zeke Krug', 'blakely hall', 1)
+INSERT INTO Lab03.thirdNormal VALUES ('Nik Bailey', 'an apartment in Morris', 2)
+INSERT INTO Lab03.thirdNormal VALUES ('Blake Johnson', 'a house in Morris', 1)
+
+SELECT * FROM Lab03.thirdNormal
+SELECT * FROM Lab03.salutations
+SELECT * FROM Lab03.movieRentals
+
