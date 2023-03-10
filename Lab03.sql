@@ -94,6 +94,7 @@ WHERE CourseNum = 9267
 
     -- First Normal
 CREATE TABLE Lab03.firstNormal(
+    id INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
     name NVARCHAR(255) NOT NULL,
     age INT NOT NULL,
     DOB DATE NOT NULL,
@@ -109,5 +110,55 @@ SELECT * FROM Lab03.firstNormal
 
     -- Second Normal
 CREATE TABLE Lab03.secondNormal(
-    name NVARCHAR(255) PRIMARY KEY
+    member_id INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
+    name NVARCHAR(255) NOT NULL,
+    address NVARCHAR(255) NOT NULL,
+    salutation NVARCHAR(5) NOT NULL
 )
+
+CREATE TABLE Lab03.movieRentals(
+    member_id INT FOREIGN KEY NOT NULL,
+    movies_rented NVARCHAR(255) NOT NULL
+)
+
+INSERT INTO Lab03.movieRentals VALUES (1, 'Harry Potter and the Chamber of Secrets')
+INSERT INTO Lab03.movieRentals VALUES (1, 'IT')
+INSERT INTO Lab03.movieRentals VALUES (2, 'Mama Mia')
+INSERT INTO Lab03.movieRentals VALUES (3, 'Friday Night Lights')
+INSERT INTO Lab03.movieRentals VALUES (3, 'John Wick 4')
+
+INSERT INTO Lab03.secondNormal VALUES ('Zeke Krug', 'blakely hall', 'Mr.')
+INSERT INTO Lab03.secondNormal VALUES ('Nik Bailey', 'an apartment in Morris', 'Mr.')
+INSERT INTO Lab03.secondNormal VALUES ('Blake Johnson', 'a house in Morris', 'Mr.')
+
+
+    -- Third Normal
+CREATE TABLE Lab03.thirdNormal(
+    member_id INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
+    name NVARCHAR(255) NOT NULL,
+    address NVARCHAR(255) NOT NULL,
+    salutation INT FOREIGN KEY NOT NULL
+)
+
+CREATE TABLE Lab03.movieRentals(
+    member_id INT FOREIGN KEY NOT NULL,
+    movies_rented NVARCHAR(255) NOT NULL
+)
+
+CREATE TABLE Lab03.salutations(
+    salutation_id INT PRIMARY KEY NOT NULL,
+    salutation NVARCHAR(5) NOT NULL
+)
+
+INSERT INTO Lab03.movieRentals VALUES (1, 'Harry Potter and the Chamber of Secrets')
+INSERT INTO Lab03.movieRentals VALUES (1, 'IT')
+INSERT INTO Lab03.movieRentals VALUES (2, 'Mama Mia')
+INSERT INTO Lab03.movieRentals VALUES (3, 'Friday Night Lights')
+INSERT INTO Lab03.movieRentals VALUES (3, 'John Wick 4')
+
+INSERT INTO Lab03.salutations VALUES (1, 'Mr.')
+INSERT INTO Lab03.salutations VALUES (2, 'Dr.')
+
+INSERT INTO Lab03.secondNormal VALUES ('Zeke Krug', 'blakely hall', 1)
+INSERT INTO Lab03.secondNormal VALUES ('Nik Bailey', 'an apartment in Morris', 2)
+INSERT INTO Lab03.secondNormal VALUES ('Blake Johnson', 'a house in Morris', 1)
