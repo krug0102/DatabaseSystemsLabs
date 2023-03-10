@@ -117,7 +117,7 @@ CREATE TABLE Lab03.secondNormal(
 )
 
 CREATE TABLE Lab03.movieRentals(
-    member_id INT FOREIGN KEY NOT NULL,
+    member_id INT NOT NULL FOREIGN KEY REFERENCES Lab03.secondNormal(member_id),
     movies_rented NVARCHAR(255) NOT NULL
 )
 
@@ -140,12 +140,7 @@ CREATE TABLE Lab03.thirdNormal(
     member_id INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
     name NVARCHAR(255) NOT NULL,
     address NVARCHAR(255) NOT NULL,
-    salutation INT FOREIGN KEY NOT NULL
-)
-
-CREATE TABLE Lab03.movieRentals(
-    member_id INT FOREIGN KEY NOT NULL,
-    movies_rented NVARCHAR(255) NOT NULL
+    salutation INT NOT NULL FOREIGN KEY REFERECES Lab03.salutations(salutation_id)
 )
 
 CREATE TABLE Lab03.salutations(
