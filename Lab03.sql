@@ -1,4 +1,5 @@
 USE [ZKrug]
+USE [NBailey]
 
 CREATE SCHEMA [Lab03]
 
@@ -47,12 +48,8 @@ SELECT * FROM Lab03.t_items
 SELECT * FROM Lab03.poorDesign
 
 SELECT * FROM Lab02.inventory
-SELECT * FROM Lab02.prices
-
-INSERT INTO Lab03.poorDesign VALUES(1, 'Double Slam', 1, 1.99, 1)
-INSERT INTO Lab03.poorDesign VALUES(2, 'Double Slam', 3, 1.99, 1)
-INSERT INTO Lab03.poorDesign VALUES(3, 'Quarter Jack special', 6, 2.15, 2)
-INSERT INTO Lab03.poorDesign VALUES(4, 'Quarter Jack special', 4, 2.15, 2)
+SELECT * FROM Lab02.pricSELECT * FROM Lab04.PD_comboTable
+ign VALUES(4, 'Quarter Jack special', 4, 2.15, 2)
 INSERT INTO Lab03.poorDesign VALUES(5, 'Quarter Jack special', 5, 2.15, 2)
 
 
@@ -110,4 +107,67 @@ SELECT * FROM Lab03.firstNormal
     -- Second Normal
 CREATE TABLE Lab03.secondNormal(
     name NVARCHAR(255) PRIMARY KEY
+
+
+
 )
+
+create table Lab04.fk_A(
+    idA int not null primary key IDENTITY(1,1),
+    foreignID int not null foreign key REFERENCES Lab04.fk_B(idB)
+)
+
+create table Lab04.fk_B(
+    idB int not null primary key IDENTITY(1,1),
+    text NVARCHAR(255) not null
+)
+
+select * from Lab04.fk_B
+
+insert into Lab04.fk_A values(5),
+(6),
+(7)
+
+insert into Lab04.fk_B values('hey'), ('hi'), ('hello'), ('hola'), ('aloha'), ('nein'), ('nik dum dum')
+
+
+CREATE TABLE Lab04.randA (
+id INT,
+Fname nvarchar(255),
+Lname nvarchar(255),
+[A] INT,
+[B] INT
+)
+
+
+INSERT INTO Lab04.randA (id,Fname,Lname,A,B) values (100,'Frank','Caliendo',1,1)
+INSERT INTO Lab04.randA (id,Fname,Lname,A,B) values (101,'Bob','Johnson',2,3)
+INSERT INTO Lab04.randA (id,Fname,Lname,A,B) values (102,'Henry','Smith',3,4)
+INSERT INTO Lab04.randA (id,Fname,Lname,A,B) values (103,'Kara','Howards',4,2)
+INSERT INTO Lab04.randA (id,Fname,Lname,A,B) values (104,'Turtle','Smithson',5,9)
+INSERT INTO Lab04.randA (id,Fname,Lname,A,B) values (105,'Sarah','Hansen',6,8)
+INSERT INTO Lab04.randA (id,Fname,Lname,A,B) values (106,'Angela','Edwards',7,10)
+INSERT INTO Lab04.randA (id,Fname,Lname,A,B) values (107,'TJ','Darp',8,7)
+INSERT INTO Lab04.randA (id,Fname,Lname,A,B) values (108,'Lindsey','Victor',9,6)
+INSERT INTO Lab04.randA (id,Fname,Lname,A,B) values (109,'Sylvia','Sampson',10,11)
+INSERT INTO Lab04.randA (id,Fname,Lname,A,B) values (110,'Howard','Jones',11,10)
+INSERT INTO Lab04.randA (id,Fname,Lname,A,B) values (111,'Jeremy','Watterson',12,12)
+
+
+SELECT * FROM Lab04.randA where A BETWEEN 2 AND 9;
+SELECT * FROM Lab04.randA where B BETWEEN 2 AND 9;
+
+SELECT * FROM Lab04.randA where A BETWEEN 2 AND 9
+UNION
+SELECT * FROM Lab04.randA where B BETWEEN 2 AND 9
+
+SELECT * FROM Lab04.randA where A BETWEEN 2 AND 9
+UNION ALL
+SELECT * FROM Lab04.randA where B BETWEEN 2 AND 9
+
+SELECT * FROM Lab04.randA where A BETWEEN 2 AND 9
+UNION ALL
+SELECT * FROM Lab04.randA where B BETWEEN 2 AND 9
+ORDER BY B
+
+
