@@ -91,6 +91,7 @@ WHERE CourseNum = 9267
 
     -- First Normal
 CREATE TABLE Lab03.firstNormal(
+    id INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
     name NVARCHAR(255) NOT NULL,
     age INT NOT NULL,
     DOB DATE NOT NULL,
@@ -106,68 +107,58 @@ SELECT * FROM Lab03.firstNormal
 
     -- Second Normal
 CREATE TABLE Lab03.secondNormal(
-    name NVARCHAR(255) PRIMARY KEY
-
-
-
+    member_id INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
+    name NVARCHAR(255) NOT NULL,
+    address NVARCHAR(255) NOT NULL,
+    salutation NVARCHAR(5) NOT NULL
 )
 
-create table Lab04.fk_A(
-    idA int not null primary key IDENTITY(1,1),
-    foreignID int not null foreign key REFERENCES Lab04.fk_B(idB)
+CREATE TABLE Lab03.movieRentals(
+    member_id INT NOT NULL FOREIGN KEY REFERENCES Lab03.secondNormal(member_id),
+    movies_rented NVARCHAR(255) NOT NULL
 )
 
-create table Lab04.fk_B(
-    idB int not null primary key IDENTITY(1,1),
-    text NVARCHAR(255) not null
+INSERT INTO Lab03.movieRentals VALUES (1, 'Harry Potter and the Chamber of Secrets')
+INSERT INTO Lab03.movieRentals VALUES (1, 'IT')
+INSERT INTO Lab03.movieRentals VALUES (2, 'Mama Mia')
+INSERT INTO Lab03.movieRentals VALUES (3, 'Friday Night Lights')
+INSERT INTO Lab03.movieRentals VALUES (3, 'John Wick 4')
+
+INSERT INTO Lab03.secondNormal VALUES ('Zeke Krug', 'blakely hall', 'Mr.')
+INSERT INTO Lab03.secondNormal VALUES ('Nik Bailey', 'an apartment in Morris', 'Mr.')
+INSERT INTO Lab03.secondNormal VALUES ('Blake Johnson', 'a house in Morris', 'Mr.')
+
+SELECT * FROM Lab03.secondNormal
+SELECT * FROM Lab03.movieRentals
+
+
+    -- Third Normal
+CREATE TABLE Lab03.salutations(
+    salutation_id INT PRIMARY KEY NOT NULL,
+    salutation NVARCHAR(5) NOT NULL
+)    
+
+CREATE TABLE Lab03.thirdNormal(
+    member_id INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
+    name NVARCHAR(255) NOT NULL,
+    address NVARCHAR(255) NOT NULL,
+    salutation INT NOT NULL FOREIGN KEY REFERECES Lab03.salutations(salutation_id)
 )
 
-select * from Lab04.fk_B
+INSERT INTO Lab03.movieRentals VALUES (1, 'Harry Potter and the Chamber of Secrets')
+INSERT INTO Lab03.movieRentals VALUES (1, 'IT')
+INSERT INTO Lab03.movieRentals VALUES (2, 'Mama Mia')
+INSERT INTO Lab03.movieRentals VALUES (3, 'Friday Night Lights')
+INSERT INTO Lab03.movieRentals VALUES (3, 'John Wick 4')
 
-insert into Lab04.fk_A values(5),
-(6),
-(7)
+INSERT INTO Lab03.salutations VALUES (1, 'Mr.')
+INSERT INTO Lab03.salutations VALUES (2, 'Dr.')
 
-insert into Lab04.fk_B values('hey'), ('hi'), ('hello'), ('hola'), ('aloha'), ('nein'), ('nik dum dum')
+INSERT INTO Lab03.thirdNormal VALUES ('Zeke Krug', 'blakely hall', 1)
+INSERT INTO Lab03.thirdNormal VALUES ('Nik Bailey', 'an apartment in Morris', 2)
+INSERT INTO Lab03.thirdNormal VALUES ('Blake Johnson', 'a house in Morris', 1)
 
-
-CREATE TABLE Lab04.randA (
-id INT,
-Fname nvarchar(255),
-Lname nvarchar(255),
-[A] INT,
-[B] INT
-)
-
-
-INSERT INTO Lab04.randA (id,Fname,Lname,A,B) values (100,'Frank','Caliendo',1,1)
-INSERT INTO Lab04.randA (id,Fname,Lname,A,B) values (101,'Bob','Johnson',2,3)
-INSERT INTO Lab04.randA (id,Fname,Lname,A,B) values (102,'Henry','Smith',3,4)
-INSERT INTO Lab04.randA (id,Fname,Lname,A,B) values (103,'Kara','Howards',4,2)
-INSERT INTO Lab04.randA (id,Fname,Lname,A,B) values (104,'Turtle','Smithson',5,9)
-INSERT INTO Lab04.randA (id,Fname,Lname,A,B) values (105,'Sarah','Hansen',6,8)
-INSERT INTO Lab04.randA (id,Fname,Lname,A,B) values (106,'Angela','Edwards',7,10)
-INSERT INTO Lab04.randA (id,Fname,Lname,A,B) values (107,'TJ','Darp',8,7)
-INSERT INTO Lab04.randA (id,Fname,Lname,A,B) values (108,'Lindsey','Victor',9,6)
-INSERT INTO Lab04.randA (id,Fname,Lname,A,B) values (109,'Sylvia','Sampson',10,11)
-INSERT INTO Lab04.randA (id,Fname,Lname,A,B) values (110,'Howard','Jones',11,10)
-INSERT INTO Lab04.randA (id,Fname,Lname,A,B) values (111,'Jeremy','Watterson',12,12)
-
-
-SELECT * FROM Lab04.randA where A BETWEEN 2 AND 9;
-SELECT * FROM Lab04.randA where B BETWEEN 2 AND 9;
-
-SELECT * FROM Lab04.randA where A BETWEEN 2 AND 9
-UNION
-SELECT * FROM Lab04.randA where B BETWEEN 2 AND 9
-
-SELECT * FROM Lab04.randA where A BETWEEN 2 AND 9
-UNION ALL
-SELECT * FROM Lab04.randA where B BETWEEN 2 AND 9
-
-SELECT * FROM Lab04.randA where A BETWEEN 2 AND 9
-UNION ALL
-SELECT * FROM Lab04.randA where B BETWEEN 2 AND 9
-ORDER BY B
-
+SELECT * FROM Lab03.thirdNormal
+SELECT * FROM Lab03.salutations
+SELECT * FROM Lab03.movieRentals
 
