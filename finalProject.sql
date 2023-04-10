@@ -3,12 +3,12 @@ USE [NBailey]
 CREATE SCHEMA [finalProject]
 
 CREATE USER Blake FOR LOGIN BJohnson
-CREATE USER Zeke FOR LOGIN ZKrug
+CREATE USER Nik FOR LOGIN NBailey
 
 GRANT
     SELECT, INSERT, ALTER, DELETE, EXECUTE, UPDATE
 ON SCHEMA :: finalProject
-    TO Blake, Zeke
+    TO Blake, Nik
 GO
 
 
@@ -39,13 +39,11 @@ CREATE TABLE platform (
 )
 
 CREATE TABLE games (
-    title NVARCHAR(MAX) NOT NULL,
+    title NVARCHAR(MAX) PRIMARY KEY NOT NULL,
     genre INT FOREIGN KEY REFERENCES gameGenre(genreID),
-    platform INT FOREIGN KEY REFERENCES platform(platformID),
-    developer INT FOREIGN KEY REFERENCES developer(developerID),
     publisher INT FOREIGN KEY REFERENCES publisher(publisherID),
     release_year INT NOT NULL,
-    content_rating INT FOREIGN KEY REFERENCES contentRating(ESRBRating),
+    content_rating INT FOREIGN KEY REFERENCES contentRating(ratingID),
     units_sold INT NULL,
     total_revenue MONEY NOT NULL,
 )
@@ -202,9 +200,27 @@ VALUES
 ('RP'),
 ('RP 17+');
 
-
-
 SELECT * FROM gameGenre
 SELECT * FROM publisher
 SELECT * FROM developer
 SELECT * FROM contentRating
+SELECT * FROM games
+SELECT * FROM platform
+
+INSERT INTO games (
+    title,
+    genre,
+    platform,
+    developer,
+    publisher,
+    release_year,
+    content_rating,
+    units_sold,
+    total_revenue
+)
+VALUES
+()
+
+--TODO
+-- Separate master table into multiple tables where necessary (entries with multiple values)
+-- Add another field in Developer and Platform tables which references the PK in the game table.
