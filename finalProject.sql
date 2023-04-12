@@ -1,4 +1,4 @@
-USE [NBailey]
+USE [BJohnson]
 
 CREATE SCHEMA [finalProject]
 
@@ -12,45 +12,46 @@ ON SCHEMA :: finalProject
 GO
 
 
-CREATE TABLE gameGenre (
+CREATE TABLE finalProject.gameGenre (
     genreID INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
     genre NVARCHAR(MAX) NOT NULL,
 )
 
-CREATE TABLE publisher (
+CREATE TABLE finalProject.publisher (
     publisherID INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
     publisher NVARCHAR(MAX) NOT NULL,
 )
 
-CREATE TABLE developer (
+CREATE TABLE finalProject.developer (
     developerID INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
     developer NVARCHAR(MAX) NOT NULL,
 )
 
-CREATE TABLE contentRating (
+CREATE TABLE finalProject.contentRating (
     ratingID INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
     ESRBRating NVARCHAR(MAX) NOT NULL,
 )
 
-CREATE TABLE platform (
+CREATE TABLE finalProject.platform (
     platformID INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
     platformName NVARCHAR(MAX) NOT NULL,
     platformType NVARCHAR(MAX) NOT NULL, 
 )
 
-CREATE TABLE games (
-    title NVARCHAR(MAX) PRIMARY KEY NOT NULL,
-    genre INT FOREIGN KEY REFERENCES gameGenre(genreID),
-    publisher INT FOREIGN KEY REFERENCES publisher(publisherID),
+CREATE TABLE finalProject.games (
+    gameID int PRIMARY KEY IDENTITY(1,1) NOT NULL,
+    title NVARCHAR(MAX) NOT NULL,
+    genre INT FOREIGN KEY REFERENCES finalProject.gameGenre(genreID),
+    publisher INT FOREIGN KEY REFERENCES finalProject.publisher(publisherID),
     release_year INT NOT NULL,
-    content_rating INT FOREIGN KEY REFERENCES contentRating(ratingID),
+    content_rating INT FOREIGN KEY REFERENCES finalProject.contentRating(ratingID),
     units_sold INT NULL,
     total_revenue MONEY NOT NULL,
 )
 
 -- we'll probably have to make an alias table that the app will use
 
-INSERT INTO publisher (
+INSERT INTO finalProject.publisher (
     publisher
 )
 VALUES
@@ -80,7 +81,7 @@ VALUES
 ('ConcernedApe'),
 ('Playdead');
 
-INSERT INTO platform (
+INSERT INTO finalProject.platform (
     platformName,
     platformType
 )
@@ -97,7 +98,7 @@ VALUES
 ('Wii U', 'console'),
 ('Nintendo Switch', 'handheld');
 
-INSERT INTO gameGenre (
+INSERT INTO finalProject.gameGenre (
     genre
 )
 VALUES
@@ -121,7 +122,7 @@ VALUES
 ('Role-playing'),
 ('Simulation');
 
-INSERT INTO developer (
+INSERT INTO finalProject.developer (
     developer
 )
 VALUES
@@ -188,7 +189,7 @@ VALUES
 ('Jetpack Interactive');
 
 
-INSERT INTO contentRating (
+INSERT INTO finalProject.contentRating (
     ESRBRating
 )
 VALUES
@@ -200,14 +201,15 @@ VALUES
 ('RP'),
 ('RP 17+');
 
-SELECT * FROM gameGenre
-SELECT * FROM publisher
-SELECT * FROM developer
-SELECT * FROM contentRating
-SELECT * FROM games
-SELECT * FROM platform
+SELECT * FROM finalProject.gameGenre
+SELECT * FROM finalProject.publisher
+SELECT * FROM finalProject.developer
+SELECT * FROM finalProject.contentRating
+SELECT * FROM finalProject.games
+SELECT * FROM finalProject.platform
+SELECT * FROM finalProject.testGames
 
-INSERT INTO games (
+INSERT INTO finalProject.games (
     title,
     genre,
     platform,
@@ -218,8 +220,68 @@ INSERT INTO games (
     units_sold,
     total_revenue
 )
+
+CREATE TABLE finalProject.testGames(
+    title NVARCHAR (MAX) NOT NULL,
+    year INT NOT NULL,
+    genre INT FOREIGN KEY REFERENCES finalProject.gameGenre(genreID)
+)
+
+SELECT finalProject.testGames.title, finalProject.testGames.year, finalProject.gameGenre.genre
+FROM finalProject.testGames
+LEFT JOIN finalProject.gameGenre ON finalProject.testGames.genre=finalProject.gameGenre.genreID
+
+INSERT INTO finalProject.testGames(
+    title,
+    year,
+    genre 
+)
 VALUES
-()
+('Civilization V', 2010, 4),
+('God of War III', 2010, 3),
+('Heavy Rain', 2010, 2),
+('Limbo', 2010, 5),
+('Mass Effect 2', 2010, 6),
+('Red Dead Redemption', 2010, 3),
+('Rock band 3', 2010, 7),
+('Starcraft II: Wings of Liberty', 2010, 8),
+('Super Mario Galaxay 2', 2010, 5),
+('Super Meat Boy', 2010, 5),
+('Xenoblade Chronicles', 2010, 6),
+('Batman: Arkhma City', 2011, 3),
+('Dark Souls', 2011, 6),
+('The Elder Scrolls V: Skyrim', 2011, 6),
+('Minecraft', 2011, 9),
+('Portal 2', 2011, 10),
+('Dishonored', 2012, 11),
+('Far Cry 3', 2012, 12),
+('Fire Emblem: Awakening', 2012, 13),
+('Journey', 2012, 2),
+('Hotline Miami', 2012, 1),
+('The Walking Dead', 2012, 2),
+('XCOM: Enemy Unknown', 2012, 4),
+('Bioshock Infinite', 2013, 12),
+('Dota 2', 2013, 14),
+('Grand Theft Auto V', 2013, 3),
+('The Last of Us', 2013, 3),
+('Papers, Please', 2013, 15),
+('Destiny', 2014, 12),
+('Hearthstone', 2014, 16),
+('Shovel Knight', 2014, 5),
+('Bloodborne', 2015, 6),
+('Rocket League', 2015, 17),
+('Undertale', 2015, 18),
+('The Witcher 3: Wild Hunt', 2015, 6),
+('Inside', 2016, 5),
+('Overwatch', 2016, 12),
+('Stardew Valley', 2016, 19),
+('Uncharted 4: A Thief''s End', 2016, 3),
+('The Legend of Zelda: Breath of the Wild', 2017, 3),
+('Super Mario Odyssey', 2017, 5),
+('God of War', 2018, 3),
+('Red Dead Redemption 2', 2018, 3)
+
+DROP TABLE finalProject.testGames
 
 --TODO
 -- Separate master table into multiple tables where necessary (entries with multiple values)
