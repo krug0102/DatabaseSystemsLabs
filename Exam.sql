@@ -111,6 +111,15 @@ FROM Prac.Quiz2 JOIN Prac.Quiz1 ON Prac.Quiz2.TeacherID = Prac.Quiz1.TeacherID
 
 -- 5. Write a query that shows the Full Name of each teacher and add a count of the number of semesters they
 -- are teaching in and a count of the number of classes in that semester
+-- Blake Johnson
+SELECT
+CONCAT(Prac.Quiz1.FName, ' ', Prac.Quiz1.MI, ' ', Prac.Quiz1.LName) AS 'Full Name',
+Prac.Quiz2.Semester,
+COUNT(DISTINCT Prac.Quiz2.ClassID) AS 'Classes Taught'
+FROM Prac.Quiz2 JOIN Prac.Quiz1 ON Prac.Quiz2.TeacherID = Prac.Quiz1.TeacherID
+GROUP BY Prac.Quiz1.FName, Prac.Quiz1.MI, Prac.Quiz1.LName, Prac.Quiz2.Semester
+
+
 
 SELECT
 COUNT(DISTINCT prac.Quiz2.Semester) AS 'Semesters',
