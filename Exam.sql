@@ -119,3 +119,18 @@ FROM Prac.Quiz2
 GROUP BY TeacherID
 -- Counts the distinct Semesters and Classes a Professor is teaching
 -- TODO: how to display the Full Name
+
+
+-- This is close to working, but I can't get the JOIN to work
+SELECT
+Quiz1.FName + ' ' + Quiz1.MI + ' ' + Quiz1.LName AS 'Full Name',
+Quiz1.TeacherID
+FROM Prac.Quiz1 AS Quiz1
+LEFT JOIN
+(SELECT
+Prac.Quiz2.TeacherID,
+COUNT(DISTINCT prac.Quiz2.Semester) AS 'Semesters',
+COUNT(DISTINCT prac.Quiz2.ClassID) AS 'Classes'
+FROM Prac.Quiz2
+GROUP BY TeacherID) AS Quiz2
+ON Quiz1.TeacherID = Quiz2.TeacherID
