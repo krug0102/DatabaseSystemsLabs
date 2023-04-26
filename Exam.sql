@@ -1,4 +1,4 @@
-USE [NBailey]
+USE [ZKrug]
 
 CREATE SCHEMA [Prac]
 
@@ -98,3 +98,24 @@ FROM Prac.Quiz2 JOIN Prac.Quiz1 ON Prac.Quiz2.TeacherID = Prac.Quiz1.TeacherID
 
 -- 4. Same as #3 but with FName, MI, and LName combined into one field called 'Full Name'
 -- Zeke Krug
+SELECT 
+    ClassName AS Class,
+    ClassDiscipline AS Major,
+    Semester AS Semester,
+    ClassCredits AS Credits,
+    Prac.Quiz1.FName + ' ' + Prac.Quiz1.MI + ' ' + Prac.Quiz1.LName AS 'Full Name',
+    Prac.Quiz1.State AS State,
+    Prac.Quiz1.HighestDegree AS Degree,
+    Prac.Quiz1.HireDate AS hire_date
+FROM Prac.Quiz2 JOIN Prac.Quiz1 ON Prac.Quiz2.TeacherID = Prac.Quiz1.TeacherID
+
+-- 5. Write a query that shows the Full Name of each teacher and add a count of the number of semesters they
+-- are teaching in and a count of the number of classes in that semester
+
+SELECT
+COUNT(DISTINCT prac.Quiz2.Semester) AS 'Semesters',
+COUNT(DISTINCT prac.Quiz2.ClassName) AS 'Classes'
+FROM Prac.Quiz2
+GROUP BY TeacherID
+-- Counts the distinct Semesters and Classes a Professor is teaching
+-- TODO: how to display the Full Name
