@@ -126,6 +126,14 @@ COUNT(DISTINCT prac.Quiz2.ClassName) AS 'Classes'
 FROM Prac.Quiz2
 GROUP BY TeacherID
 
+SELECT
+    CONCAT(q1.FName, ' ', q1.MI, ' ', q1.LName) AS FullName,
+    COUNT(DISTINCT q2.Semester) AS Semesters,
+    COUNT(q2.ClassID) AS Classes
+FROM Prac.Quiz1 q1
+JOIN Prac.Quiz2 q2 ON q1.TeacherID = q2.TeacherID
+GROUP BY q1.FName, q1.MI, q1.LName
+
 -- 9. Sums up the credits for each semester by discipline and filters by disciplines that have more than 6 total credits
 -- Blake Johnson
 -- This one divides it further to show how many credits in each semester by discipline (not necessary but double check)
