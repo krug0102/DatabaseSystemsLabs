@@ -111,35 +111,41 @@ FROM Prac.Quiz2 JOIN Prac.Quiz1 ON Prac.Quiz2.TeacherID = Prac.Quiz1.TeacherID
 
 -- 5. Write a query that shows the Full Name of each teacher and add a count of the number of semesters they
 -- are teaching in and a count of the number of classes in that semester
--- Blake Johnson
-SELECT
-CONCAT(Prac.Quiz1.FName, ' ', Prac.Quiz1.MI, ' ', Prac.Quiz1.LName) AS 'Full Name',
-Prac.Quiz2.Semester,
-COUNT(DISTINCT Prac.Quiz2.ClassID) AS 'Classes Taught'
-FROM Prac.Quiz2 JOIN Prac.Quiz1 ON Prac.Quiz2.TeacherID = Prac.Quiz1.TeacherID
-GROUP BY Prac.Quiz1.FName, Prac.Quiz1.MI, Prac.Quiz1.LName, Prac.Quiz2.Semester
-
-
-
-SELECT
-COUNT(DISTINCT prac.Quiz2.Semester) AS 'Semesters',
-COUNT(DISTINCT prac.Quiz2.ClassName) AS 'Classes'
-FROM Prac.Quiz2
-GROUP BY TeacherID
--- Counts the distinct Semesters and Classes a Professor is teaching
--- TODO: how to display the Full Name
-
-
+-- Zeke Krug
 -- This is close to working, but I can't get the JOIN to work
+
 SELECT
-Quiz1.FName + ' ' + Quiz1.MI + ' ' + Quiz1.LName AS 'Full Name',
-Quiz1.TeacherID
-FROM Prac.Quiz1 AS Quiz1
-LEFT JOIN
-(SELECT
 Prac.Quiz2.TeacherID,
 COUNT(DISTINCT prac.Quiz2.Semester) AS 'Semesters',
 COUNT(DISTINCT prac.Quiz2.ClassID) AS 'Classes'
 FROM Prac.Quiz2
-GROUP BY TeacherID) AS Quiz2
-ON Quiz1.TeacherID = Quiz2.TeacherID
+GROUP BY TeacherID
+
+
+-- 9. Sums up the credits for each semester by discipline and filters by disciplines that have more than 6 total credits
+-- Blake Johnson
+-- This one divides it further to show how many credits in each semester by discipline (not necessary but double check)
+-- Adjust filter value (currently 6) to see other results for these two queries
+SELECT
+Prac.Quiz2.ClassDiscipline,
+Prac.Quiz2.Semester AS 'Semesters',
+SUM(Prac.Quiz2.ClassCredits) AS 'Semester Credits'
+FROM Prac.Quiz2
+GROUP BY Semester, ClassDiscipline
+HAVING SUM(Prac.Quiz2.ClassCredits) > 6
+
+
+-- 10. Same as query 4 but adds a sub-query in the WHERE clause that pulls the last semester
+-- Blake Johnson
+SELECT 
+    ClassName AS Class,
+    ClassDiscipline AS Major,
+    Semester AS Semester,
+    ClassCredits AS Credits,
+    CONCAT(Prac.Quiz1.FName, ' ', Prac.Quiz1.MI, ' ', Prac.Quiz1.LName) AS 'Full Name',
+    Prac.Quiz1.State,
+    Prac.Quiz1.HighestDegree AS Degree,
+    Prac.Quiz1.HireDate
+FROM Prac.Quiz2 JOIN Prac.Quiz1 ON Prac.Quiz2.TeacherID = Prac.Quiz1.TeacherID
+WHERE Prac.Quiz2.Semester NOT IN 
+(SELECT Prac.Quiz2.Semester FROM Prac.Quiz2 WHERE Semester != 'S24') 
