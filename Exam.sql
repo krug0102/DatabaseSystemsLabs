@@ -134,9 +134,38 @@ JOIN Prac.Quiz2 ON Quiz1.TeacherID = Quiz2.TeacherID
 GROUP BY Quiz1.FName, Quiz1.MI, Quiz1.LName, Quiz1.HireDate
 
 -- 7. Same as #6 but filter it to one specific teacher
+-- Zeke Krug
+SELECT
+CONCAT(Quiz1.FName, ' ', Quiz1.MI, ' ', Quiz1.LName) as 'Full Name',
+COUNT(Distinct Quiz2.Semester) AS 'Total Semesters',
+COUNT(Quiz2.ClassID) AS Classes,
+DATEDIFF(month, Quiz1.HireDate, GETDATE()) AS 'Months Worked'
+FROM Prac.Quiz1
+JOIN Prac.Quiz2 ON Quiz1.TeacherID = Quiz2.TeacherID
+WHERE Prac.Quiz1.TeacherID = 1
+GROUP BY Quiz1.FName, Quiz1.MI, Quiz1.LName, Quiz1.HireDate
 
 -- 8. Using #7 twice (filter both to different teachers) write a UNION ALL statement that combines the two queries
-
+-- Zeke Krug
+SELECT
+CONCAT(Quiz1.FName, ' ', Quiz1.MI, ' ', Quiz1.LName) as 'Full Name',
+COUNT(Distinct Quiz2.Semester) AS 'Total Semesters',
+COUNT(Quiz2.ClassID) AS Classes,
+DATEDIFF(month, Quiz1.HireDate, GETDATE()) AS 'Months Worked'
+FROM Prac.Quiz1
+JOIN Prac.Quiz2 ON Quiz1.TeacherID = Quiz2.TeacherID
+WHERE Prac.Quiz1.TeacherID = 1
+GROUP BY Quiz1.FName, Quiz1.MI, Quiz1.LName, Quiz1.HireDate
+UNION ALL
+SELECT
+CONCAT(Quiz1.FName, ' ', Quiz1.MI, ' ', Quiz1.LName) as 'Full Name',
+COUNT(Distinct Quiz2.Semester) AS 'Total Semesters',
+COUNT(Quiz2.ClassID) AS Classes,
+DATEDIFF(month, Quiz1.HireDate, GETDATE()) AS 'Months Worked'
+FROM Prac.Quiz1
+JOIN Prac.Quiz2 ON Quiz1.TeacherID = Quiz2.TeacherID
+WHERE Prac.Quiz1.TeacherID = 2
+GROUP BY Quiz1.FName, Quiz1.MI, Quiz1.LName, Quiz1.HireDate
 
 -- 9. Sums up the credits for each semester by discipline and filters by disciplines that have more than 6 total credits
 -- Blake Johnson
