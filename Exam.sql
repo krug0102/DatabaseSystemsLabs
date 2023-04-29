@@ -123,14 +123,15 @@ GROUP BY Quiz1.FName, Quiz1.MI, Quiz1.LName
 
 -- 6 Same as #5, but add an attribute that calculates the months between when the teacher was hired and the current date
 -- Nik Bailey
+
 SELECT
 CONCAT(Quiz1.FName, ' ', Quiz1.MI, ' ', Quiz1.LName) as 'Full Name',
 COUNT(Distinct Quiz2.Semester) AS 'Total Semesters',
 COUNT(Quiz2.ClassID) AS Classes,
-DATEDIFF(month, )
+DATEDIFF(month, Quiz1.HireDate, GETDATE()) AS 'Months Worked'
 FROM Prac.Quiz1
 JOIN Prac.Quiz2 ON Quiz1.TeacherID = Quiz2.TeacherID
-GROUP BY Quiz1.FName, Quiz1.MI, Quiz1.LName
+GROUP BY Quiz1.FName, Quiz1.MI, Quiz1.LName, Quiz1.HireDate
 
 -- 7. Same as #6 but filter it to one specific teacher
 
