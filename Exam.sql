@@ -111,15 +111,30 @@ FROM Prac.Quiz2 JOIN Prac.Quiz1 ON Prac.Quiz2.TeacherID = Prac.Quiz1.TeacherID
 
 -- 5. Write a query that shows the Full Name of each teacher and add a count of the number of semesters they
 -- are teaching in and a count of the number of classes in that semester
--- Zeke Krug
--- This is close to working, but I can't get the JOIN to work
+-- Nik Bailey
 
 SELECT
-Prac.Quiz2.TeacherID,
-COUNT(DISTINCT prac.Quiz2.Semester) AS 'Semesters',
-COUNT(DISTINCT prac.Quiz2.ClassID) AS 'Classes'
-FROM Prac.Quiz2
-GROUP BY TeacherID
+CONCAT(Quiz1.FName, ' ', Quiz1.MI, ' ', Quiz1.LName) as 'Full Name',
+COUNT(Distinct Quiz2.Semester) AS 'Total Semesters',
+COUNT(Quiz2.ClassID) AS Classes
+FROM Prac.Quiz1
+JOIN Prac.Quiz2 ON Quiz1.TeacherID = Quiz2.TeacherID
+GROUP BY Quiz1.FName, Quiz1.MI, Quiz1.LName
+
+-- 6 Same as #5, but add an attribute that calculates the months between when the teacher was hired and the current date
+-- Nik Bailey
+SELECT
+CONCAT(Quiz1.FName, ' ', Quiz1.MI, ' ', Quiz1.LName) as 'Full Name',
+COUNT(Distinct Quiz2.Semester) AS 'Total Semesters',
+COUNT(Quiz2.ClassID) AS Classes,
+DATEDIFF(month, )
+FROM Prac.Quiz1
+JOIN Prac.Quiz2 ON Quiz1.TeacherID = Quiz2.TeacherID
+GROUP BY Quiz1.FName, Quiz1.MI, Quiz1.LName
+
+-- 7. Same as #6 but filter it to one specific teacher
+
+-- 8. Using #7 twice (filter both to different teachers) write a UNION ALL statement that combines the two queries
 
 
 -- 9. Sums up the credits for each semester by discipline and filters by disciplines that have more than 6 total credits
